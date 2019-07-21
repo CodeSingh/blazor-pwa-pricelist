@@ -1,0 +1,17 @@
+﻿[
+  {
+    "food": "samosa",
+    "foodpanj": "ਸਮੋਸਾ",
+    "priceperunit": 0.3
+  },
+  {
+    "food": "spring roll",
+    "foodpanj": "ਸਪਰਿੰਗ ਰੋਲ",
+    "priceperunit": 0.35
+  },
+  {
+    "food": "pakora",
+    "foodpanj": "ਪਕੌਰਾ",
+    "priceperunit": 1
+  }
+]

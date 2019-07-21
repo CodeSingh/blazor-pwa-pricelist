@@ -1,0 +1,105 @@
+﻿@page "/pricelist"
+@inject HttpClient Http
+
+<h1>Price Sheet</h1>
+
+<p>Select the required food and add a quantity to get a price</p>
+
+@if (priceSheets == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    if (selectedFood != null){
+        <label>@selectedFood.FoodPanj (@selectedFood.Food)</label>
+        <label>@selectedFood.PricePerUnit.ToString("C")</label>
+        <input type='number' bind-value-oninput="@selectedFood.Qty"/>
+        <label>@selectedFood.TotalPrice.ToString("C")</label>
+        <button class='btn btn-success xs-12' onclick='@AddFood'>Add</button>
+    }
+
+    @foreach(SelectedFood food in selectedFoods)
+    {
+        <br /><strong>@food.FoodPanj x @food.Qty = @food.TotalPrice.ToString("C")</strong>
+    }
+    <h3>Total: @selectedFoods.Sum(item => item.TotalPrice).ToString("C")</h3>
+
+    <table class='table'>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Food</th>
+                <th>Price per unit</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var priceSheet in priceSheets)
+            {
+                <tr>
+                    <td><button class='btn btn-primary' onclick='@( () => SelectPriceSheet(priceSheet) )'>Select</button></td>
+                    <td>@priceSheet.FoodPanj (@priceSheet.Food)</td>
+                    <td>@priceSheet.PricePerUnit.ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@functions {
+    PriceSheet[] priceSheets;
+    SelectedFood selectedFood;
+    List<SelectedFood> selectedFoods = new List<SelectedFood>();
+
+    protected override async Task OnInitAsync()
+    {
+        priceSheets = await Http.GetJsonAsync<PriceSheet[]>("sample-data/pricesheet.json");
+    }
+
+    void SelectPriceSheet(PriceSheet _priceSheet)
+    {
+        selectedFood = new SelectedFood(){
+                Food = _priceSheet.Food,
+                FoodPanj = _priceSheet.FoodPanj,
+                PricePerUnit = _priceSheet.PricePerUnit,
+                Qty = 0
+            };
+    }
+
+    void AddFood()
+    {
+        if(selectedFood != null){
+            selectedFoods.Add(this.selectedFood);
+            System.Console.WriteLine("selected food added");
+        }
+        else{
+            System.Console.WriteLine("nothing to add");
+        }
+    }
+
+    class SelectedFood
+    {
+        public string Food { get; set; }
+
+        public string FoodPanj { get; set; }
+
+        public double PricePerUnit { get; set; }
+
+        public int Qty { get; set; } = 0;
+        
+        public double TotalPrice 
+        {
+            get { return this.Qty * this.PricePerUnit;  }
+        }
+    }
+
+    class PriceSheet
+    {
+        public string Food { get; set; }
+
+        public string FoodPanj { get; set; }
+
+        public double PricePerUnit { get; set; }
+    }
+}

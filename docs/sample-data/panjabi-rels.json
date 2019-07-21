@@ -1,0 +1,33 @@
+﻿[
+  {
+    "engname": "Father's father",
+    "panjname": "Dada",
+    "otherpanjname": "Baba",
+    "gurmukhiname":""
+
+  },
+  {
+    "engname": "Father's mother",
+    "panjname": "Dadi",
+    "otherpanjname": "Bibi",
+    "gurmukhiname":""
+  },
+  {
+    "engname": "Mother's father",
+    "panjname": "Nana",
+    "otherpanjname": "",
+    "gurmukhiname":""
+  },
+  {
+    "engname": "Mother's mother",
+    "panjname": "Nani",
+    "otherpanjname": "",  
+    "gurmukhiname":""
+  },
+  {
+    "engname": "Father",
+    "panjname": "Papa",
+    "otherpanjname": "Pita",
+    "gurmukhiname":""
+  }
+]
